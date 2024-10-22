@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Programs</title>
+    <style>
+        .card {
+            border: 2px solid #000;
+            padding: 20px;
+            width: 300px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            text-align: center;
+        }
+
+        .card p {
+            margin: 10px 0;
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result,
+        #guessResult,
+        #rangeResult,
+        #closestResult,
+        #arrayDisplay {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <section>
+        <div class="card">
+            <h2>Sum or Triple Sum</h2>
+            <label for="num1">Enter first number:</label>
+            <input type="number" id="num1" placeholder="First number">
+
+            <label for="num2">Enter second number:</label>
+            <input type="number" id="num2" placeholder="Second number">
+
+            <button onclick="sumOrTripleSum()">Calculate</button>
+            <p id="result">Result: </p>
+        </div>
+
+
+        <script>
+            function sumOrTripleSum() {
+                var num1 = parseInt(document.getElementById("num1").value);
+                var num2 = parseInt(document.getElementById("num2").value);
+                var result;
+
+                if (num1 === num2) {
+                    result = 3 * (num1 + num2);
+                } else {
+                    result = num1 + num2;
+                }
+
+                document.getElementById("result").textContent = "Result: " + result;
+            }
+        </script>
+
+    </section>
+
+
+
+    
+    <section>
+        <div class="card">
+            <h2>Guess the Number Game</h2>
+            <p>Enter your guess (between 1 and 10) in the box below:</p>
+
+            <input type="number" id="guessInput" placeholder="Your guess" min="1" max="10">
+            <button onclick="guessNumber()">Submit Guess</button>
+
+            <p id="guessResult"></p>
+        </div>
+
+        <script>
+            var randomNum = Math.floor(Math.random() * 10) + 1;
+
+            function guessNumber() {
+                var guess = parseInt(document.getElementById("guessInput").value);
+                var message;
+
+                if (guess === randomNum) {
+                    message = "Good Work!";
+                } else {
+                    message = "Not matched! The correct number was " + randomNum;
+                }
+
+                document.getElementById("guessResult").textContent = message;
+                randomNum = Math.floor(Math.random() * 10) + 1;
+            }
+        </script>
+    </section>
+
+
+
+    <section>
+        <div class="card">
+            <h2>Range Checker</h2>
+            <p>Enter two numbers to check if either is in the range 50 to 99.</p>
+
+            <label for="rangeNum1">Enter first number:</label>
+            <input type="number" id="rangeNum1" placeholder="First number">
+
+            <label for="rangeNum2">Enter second number:</label>
+            <input type="number" id="rangeNum2" placeholder="Second number">
+
+            <button onclick="checkRange()">Check Range</button>
+
+            <p id="rangeResult">Result: </p>
+        </div>
+
+        <script>
+            function checkRange() {
+                var num1 = parseInt(document.getElementById("rangeNum1").value);
+                var num2 = parseInt(document.getElementById("rangeNum2").value);
+                var message;
+
+                if ((num1 >= 50 && num1 <= 99) || (num2 >= 50 && num2 <= 99)) {
+                    message = "True! One or both numbers are in the range 50 to 99.";
+                } else {
+                    message = "False! Neither number is in the range 50 to 99.";
+                }
+
+                document.getElementById("rangeResult").textContent = message;
+            }
+        </script>
+    </section>
+
+
+
+    <section>
+        <div class="card">
+            <h2>Closest to 100</h2>
+            <p>Enter two numbers to find which is closest to 100.</p>
+
+            <label for="closestNum1">Enter first number:</label>
+            <input type="number" id="closestNum1" placeholder="First number">
+
+            <label for="closestNum2">Enter second number:</label>
+            <input type="number" id="closestNum2" placeholder="Second number">
+
+            <button onclick="closestTo100()">Find Closest</button>
+
+            <p id="closestResult">Result: </p>
+        </div>
+
+        <script>
+            function closestTo100() {
+                var num1 = parseInt(document.getElementById("closestNum1").value);
+                var num2 = parseInt(document.getElementById("closestNum2").value);
+                var diff1 = Math.abs(100 - num1);
+                var diff2 = Math.abs(100 - num2);
+                var message;
+
+                if (diff1 < diff2) {
+                    message = num1 + " is closer to 100.";
+                } else if (diff2 < diff1) {
+                    message = num2 + " is closer to 100.";
+                } else {
+                    message = "Both numbers are equally close to 100.";
+                }
+
+                document.getElementById("closestResult").textContent = message;
+            }
+        </script>
+    </section>
+
+
+
+    <section>
+        <div class="card">
+            <h2>Add Items to Array</h2>
+            <input type="text" id="itemInput" placeholder="Enter a value">
+            <div style="display: flex; justify-content: space-between;">
+                <button onclick="addItem()">Add</button>
+                <button onclick="displayArray()">Display</button>
+            </div>
+            <hr>
+            <div id="arrayDisplay"></div>
+        </div>
+
+        <script>
+
+            let itemsArray = [];
+
+            function addItem() {
+                const itemInput = document.getElementById("itemInput");
+                const itemValue = itemInput.value.trim();
+
+                if (itemValue) {
+                    itemsArray.push(itemValue);
+                    itemInput.value = "";
+                } else {
+                    alert("Please enter a valid item.");
+                }
+            }
+
+            function displayArray() {
+                let displayDiv = document.getElementById("arrayDisplay");
+                displayDiv.innerHTML = "";
+
+                itemsArray.forEach((element, index) => {
+                    displayDiv.innerHTML += `Element ${index + 1} = ${element}<br>`;
+                });
+            }
+        </script>
+    </section>
+
+
+
+
+</body>
+
+</html>
